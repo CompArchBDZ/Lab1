@@ -61,7 +61,39 @@ module testAlu();
 
     // XOR =====================================================================
 
+    // XOR #1: 0 XOR 0 = 0
+    command = `XOR; operandA = 32'b0; operandB = 32'b0;
+    $display("XOR | %h %h %h | %d %b %b %b | 0 0 0 0", command, operandA, operandB, result, carryout, zero, overflow);
+
+    // XOR #2: 0 XOR 1 = 1
+    command = `XOR; operandA = 32'b0; operandB = 32'b1;
+    $display("XOR | %h %h %h | %d %b %b %b | 1 0 0 0", command, operandA, operandB, result, carryout, zero, overflow);
+
+    // XOR #3: 1 XOR 0 = 1
+    command = `XOR; operandA = 32'b1; operandB = 32'b0;
+    $display("XOR | %h %h %h | %d %b %b %b | 1 0 0 0", command, operandA, operandB, result, carryout, zero, overflow);
+
+    // XOR #4: 1 XOR 1 = 0
+    command = `XOR; operandA = 32'b1; operandB = 32'b1;
+    $display("XOR | %h %h %h | %d %b %b %b | 0 0 0 0", command, operandA, operandB, result, carryout, zero, overflow);
+
     // SLT =====================================================================
+
+    // SLT #1: 2 < 3 = 1
+    command = `SLT; operandA = 32'd2; operandB = 32'd3;
+    $display("SLT | %h %h %h | %d %b %b %b | 1 0 0 0", command, operandA, operandB, result, carryout, zero, overflow);
+
+    // SLT #2: 3 < 2 = 0
+    command = `SLT; operandA = 32'd3; operandB = 32'd2;
+    $display("SLT | %h %h %h | %d %b %b %b | 0 0 0 0", command, operandA, operandB, result, carryout, zero, overflow);
+
+    // SLT #3: -1 < 1 = 1
+    command = `SLT; operandA = 32'hFF; operandB = 32'h01;
+    $display("SLT | %h %h %h | %d %b %b %b | 1 0 0 0", command, operandA, operandB, result, carryout, zero, overflow);
+
+    // SLT #4: 1 < -1 = 0
+    command = `SLT; operandA = 32'h01; operandB = 32'hFF;
+    $display("SLT | %h %h %h | %d %b %b %b | 0 0 0 0", command, operandA, operandB, result, carryout, zero, overflow);
 
     // AND =====================================================================
     $display("name | command operandA operandB | result carryout zero overflow | EResult ECarryout EZero EOverflow");
@@ -104,5 +136,22 @@ module testAlu();
     // NOR =====================================================================
 
     // OR ======================================================================
+
+    // OR #1: 0 OR 0 = 0
+    command = `OR; operandA = 32'b0; operandB = 32'b0;
+    $display("OR  | %h %h %h | %d %b %b %b | 0 0 0 0", command, operandA, operandB, result, carryout, zero, overflow);
+
+    // OR #2: 0 OR 1 = 1
+    command = `OR; operandA = 32'b0; operandB = 32'b1;
+    $display("OR  | %h %h %h | %d %b %b %b | 1 0 0 0", command, operandA, operandB, result, carryout, zero, overflow);
+
+    // OR #3: 1 OR 0 = 1
+    command = `OR; operandA = 32'b1; operandB = 32'b0;
+    $display("OR  | %h %h %h | %d %b %b %b | 1 0 0 0", command, operandA, operandB, result, carryout, zero, overflow);
+
+    // OR #4: 1 OR 1 = 1
+    command = `OR; operandA = 32'b1; operandB = 32'b1;
+    $display("OR  | %h %h %h | %d %b %b %b | 1 0 0 0", command, operandA, operandB, result, carryout, zero, overflow);
+
   end
 endmodule
