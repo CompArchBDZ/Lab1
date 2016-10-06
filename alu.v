@@ -17,20 +17,60 @@ module ALU
   wire[32:0] internalZeros;
   wire[32:0] internalOverflows;
 
-  genvar i;
-  generate
-    for (i=0; i < 32; i=i+1)
-    begin:ALUBitslice32
-      // TODO: Chain the ALUs to each other for carryout, zero??, and overflow??
-      ALUBitslice aluSliceNDice(
-        result[i],
-        internalCarryouts[i+1],
-        internalZeros[i+1],
-        internalOverflows[i+1],
-        operandA[i],
-        operandB[i],
-        internalCarryouts[i],
-        command);
-    end
-  endgenerate
+//   // HACK: This could be better.
+//   ALUBitslice aluSliceNDice(
+//     result[31],
+//     internalCarryouts[30],
+//     internalZeros[30],
+//     internalOverflows[30],
+//     operandA[31],
+//     operandB[31],
+//     1'b0,
+//     command);
+//
+//   genvar i;
+//   generate
+//     for (i=30; i > 0; i=i-1)
+//     begin:ALUBitslice32
+//       // TODO: Chain the ALUs to each other for carryout, zero??, and overflow??
+//       ALUBitslice aluSliceNDice(
+//         result[i],
+//         internalCarryouts[i-1],
+//         internalZeros[i-1],
+//         internalOverflows[i-1],
+//         operandA[i],
+//         operandB[i],
+//         internalCarryouts[i],
+//         command);
+//     end
+//   endgenerate
+// endmodule
+
+
+genvar i;
+generate
+  for (i=31; i > 1; i=i-1)
+  begin:ALUBitslice32
+    // TODO: Chain the ALUs to each other for carryout, zero??, and overflow??
+    ALUBitslice aluSliceNDice(
+      result[i],
+      internalCarryouts[i-1],
+      internalZeros[i-1],
+      internalOverflows[i-1],
+      operandA[i],
+      operandB[i],
+      internalCarryouts[i],
+      command);
+  end
+endgenerate
+
+ALUBitslice aluSliceNDice(
+  result[1],
+  internalCarryouts[0],
+  internalZeros[0],
+  internalOverflows[0],
+  operandA[1],
+  operandB[1],
+  1'b0,
+  command);
 endmodule
